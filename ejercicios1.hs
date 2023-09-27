@@ -119,7 +119,7 @@ eurosAPesetas :: Double -> Double
 eurosAPesetas x = x*unEuro
 
 p_inversas x = eurosAPesetas (pesetasAEuros x) == x
--- !DA ERROR POR ERROR DE REDONDEO DE PUNTO FLOTANTE
+-- ? DA ERROR POR ERROR DE REDONDEO DE PUNTO FLOTANTE
 
 -- *##### EJERCICIO 9 ##### 
 
@@ -127,46 +127,51 @@ infix 4 ~=
 
 (~=) :: Double -> Double -> Bool
 x ~= y = abs (x-y) < epsilon
-  where epsilon = 1/1000
+  where epsilon = 1/100
 
 p_inversas2 x = eurosAPesetas (pesetasAEuros x) ~= x
 
--- TODO##### EJERCICIO 10 ##### 
+-- TODO ##### EJERCICIO 10 ##### 
 
 raices :: Double -> Double -> Double -> (Double, Double)
-raices x y z
-  | root < 0 = error "test"
-  | 2*x == 0 = error "det es 0"
-  | otherwise = (r1, r2)
+raices a b c
+  | a == 0 = error "no es de grado 2"
+  | determinante < 0 = error "el determinante no puede ser negativo"
+  | otherwise = ((-b + sqrt determinante) / 2 * a, (-b - sqrt determinante) / 2 * a)
     where
-      r1 = (-y + sqrt root) / 2*x
-      r2 = (-y - sqrt root) / 2*x
-      root = y*y - (4*x*z)
+      determinante = (b*b) - (4*a*c)
 
 p1_raices a b c = esRaiz r1 && esRaiz r2
  where
   (r1,r2) = raices a b c
   esRaiz r = a*r*r + b*r + c ~= 0
 
-p1_raices2 a b c = (b*b - (4*a*c)) >= 0 && a /= 0 ==> esRaiz r1 && esRaiz r2
+p1_raices2 a b c = determinante >= 0 && a /= 0 ==> esRaiz r1 && esRaiz r2
  where
   (r1,r2) = raices a b c
-  esRaiz r = a*r*r + b*r + c ~= 0
+  esRaiz r = a*r^2 + b*r + c ~= 0
+  determinante = (b*b) - (4*a*c)
 
 
 -- *##### EJERCICIO 11 ##### 
 
-
+esMultiplo :: Integral a => a -> a -> Bool
+esMultiplo x y = mod x y == 0 
 
 -- *##### EJERCICIO 12 ##### 
 
-
+infixl 1 ==>>
+(==>>) :: Bool -> Bool -> Bool
+a ==>> b
+  | a == True && b == False = False
+  | otherwise = True
 
 -- *##### EJERCICIO 13 ##### 
 
+esBisiesto :: Integer -> Bool
+esBisiesto x = (mod x 4 == 0) && (mod x 100 == 0 ==>> mod x 400 == 0) 
 
-
--- *##### EJERCICIO 14 ##### 
+-- TODO ##### EJERCICIO 14 ##### 
 
 potencia :: Integer -> Integer -> Integer
 potencia b n
@@ -180,16 +185,34 @@ potencia' b n
   | mod n 2 == 0 = inside * inside
   | otherwise = b * inside2 * inside2
     where inside = potencia' b (div n 2)
-          inside2 = potencia' b (div (n-1) 2)
+          inside2 = potencia' b (div (n -1) 2)
+
+p_pot b n = n>=0 ==> potencia b n == sol && potencia' b n == sol
+  where sol = b^n
 
 -- *##### EJERCICIO 15 ##### 
 
-
+factorial :: Integer -> Integer
+factorial x
+  | x == 1 = x
+  | otherwise = x * factorial (x-1)
 
 -- *##### EJERCICIO 16 ##### 
 
+divideA :: Integer -> Integer -> Bool
+divideA x y = mod y x == 0
 
+p1_divideA x y = y/=0 && y `divideA` x ==> div x y * y == x
+-- ? dos condiciones : (a) el divisor no es cero (b) siempre que y divida a x, (x/y) * y == x
+
+p2_divideA x y z = x /= 0 && (x `divideA` y && x `divideA` z) ==>> (x `divideA` (y+z))
 
 -- *##### EJERCICIO 17 ##### 
 
-
+mediana :: Ord a => (a,a,a,a,a) -> a
+mediana (a, b, c, d, e)
+  | a > b = mediana (b, a, c, d, e)
+  | b > c = mediana (a, c, b, d, e)
+  | c > d = mediana (a, b, d, c, e)
+  | d > e = mediana (a, b, c, e, d)
+  | otherwise = c
