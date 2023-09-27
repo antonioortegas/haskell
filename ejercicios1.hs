@@ -79,26 +79,79 @@ p4_max2 (a, b) = b >= a ==> max2 a b == b
 
 -- *##### EJERCICIO 5 ##### 
 
-
+entre :: Ord a => a -> (a,a) -> Bool
+entre x (y, z)
+  | y <= x && x <= z = True
+  |otherwise = False
 
 -- *##### EJERCICIO 6 ##### 
 
-
+iguales3 :: Eq a => (a,a,a) -> Bool
+iguales3 (x,y,z) = x == y && x == z
 
 -- *##### EJERCICIO 7 ##### 
 
+type TotalSegundos  = Integer
+type Horas          = Integer
+type Minutos        = Integer
+type Segundos       = Integer
+descomponer :: TotalSegundos -> (Horas,Minutos,Segundos)
+descomponer x = (horas, minutos, segundos)
+  where
+    horas = div x 3600
+    minutos = div (mod x 3600) 60
+    segundos = mod x 60
 
+p_descomponer x = x>=0 ==> h*3600 + m*60 + s == x
+                            && entre m (0,59)
+                            && entre s (0,59)
+  where (h,m,s) = descomponer x
 
 -- *##### EJERCICIO 8 ##### 
 
+unEuro :: Double
+unEuro = 166.386
 
+pesetasAEuros :: Double -> Double
+pesetasAEuros x = x/unEuro
+
+eurosAPesetas :: Double -> Double
+eurosAPesetas x = x*unEuro
+
+p_inversas x = eurosAPesetas (pesetasAEuros x) == x
+-- !DA ERROR POR ERROR DE REDONDEO DE PUNTO FLOTANTE
 
 -- *##### EJERCICIO 9 ##### 
 
+infix 4 ~=
 
+(~=) :: Double -> Double -> Bool
+x ~= y = abs (x-y) < epsilon
+  where epsilon = 1/1000
 
--- *##### EJERCICIO 10 ##### 
+p_inversas2 x = eurosAPesetas (pesetasAEuros x) ~= x
 
+-- TODO##### EJERCICIO 10 ##### 
+
+raices :: Double -> Double -> Double -> (Double, Double)
+raices x y z
+  | root < 0 = error "test"
+  | 2*x == 0 = error "det es 0"
+  | otherwise = (r1, r2)
+    where
+      r1 = (-y + sqrt root) / 2*x
+      r2 = (-y - sqrt root) / 2*x
+      root = y*y - (4*x*z)
+
+p1_raices a b c = esRaiz r1 && esRaiz r2
+ where
+  (r1,r2) = raices a b c
+  esRaiz r = a*r*r + b*r + c ~= 0
+
+p1_raices2 a b c = (b*b - (4*a*c)) >= 0 && a /= 0 ==> esRaiz r1 && esRaiz r2
+ where
+  (r1,r2) = raices a b c
+  esRaiz r = a*r*r + b*r + c ~= 0
 
 
 -- *##### EJERCICIO 11 ##### 
@@ -115,7 +168,19 @@ p4_max2 (a, b) = b >= a ==> max2 a b == b
 
 -- *##### EJERCICIO 14 ##### 
 
+potencia :: Integer -> Integer -> Integer
+potencia b n
+  | n == 1 = b
+  | otherwise = b * potencia b (n-1)
 
+potencia' :: Integer -> Integer -> Integer
+potencia' b n
+  | n == 0 = 1
+  | n == 2 = b*b
+  | mod n 2 == 0 = inside * inside
+  | otherwise = b * inside2 * inside2
+    where inside = potencia' b (div n 2)
+          inside2 = potencia' b (div (n-1) 2)
 
 -- *##### EJERCICIO 15 ##### 
 
