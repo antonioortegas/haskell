@@ -1,11 +1,11 @@
 import Data.Char
 import Test.QuickCheck
 
---* BASES
+-- * BASES
 
---? identificadores empiezan por minuscula o "_", y los siguientes pueden ser letras, digitos, tildes o _
---? f    f'  f2  _uno    dos     toDo        son validos
---? F    F2  f!y                             no lo son
+-- ? identificadores empiezan por minuscula o "_", y los siguientes pueden ser letras, digitos, tildes o _
+-- ? f    f'  f2  _uno    dos     toDo        son validos
+-- ? F    F2  f!y                             no lo son
 
 -- los tipos empiezan por mayuscula
 -- Int, Integer, Bool, Float, Double...
@@ -38,9 +38,9 @@ import Test.QuickCheck
 -- igual con la ASOCIATIVIDAD, parentesis ante la duda (por ejemplo no se puede poner x == y == z)
 -- no es lo mismo que la propiedad matematica de una operacion de ser asociativa
 
---? se escribe
---? identificador :: tipodeentrada -> tipodeentrada2 -> ... -> tipodesalida
---? identificador parametro1 parametro2 ... = operaciones a realizar
+-- ? se escribe
+-- ? identificador :: tipodeentrada -> tipodeentrada2 -> ... -> tipodesalida
+-- ? identificador parametro1 parametro2 ... = operaciones a realizar
 
 twice :: Integer -> Integer
 twice x = x + x
@@ -51,9 +51,9 @@ square x = x * x
 sumOfSquares :: Integer -> Integer -> Integer
 sumOfSquares x y = square x + square y
 
---? para hacer el cuadrado de 5+1, se deben poner parentesis, de lo contrario hara (square de 5) +1
---? square (5 + 1)
---? ANTE LA DUDA, PARENTESIS AL CANTO
+-- ? para hacer el cuadrado de 5+1, se deben poner parentesis, de lo contrario hara (square de 5) +1
+-- ? square (5 + 1)
+-- ? ANTE LA DUDA, PARENTESIS AL CANTO
 
 --para condicionales
 maxInteger :: Integer -> Integer -> Integer
@@ -75,8 +75,8 @@ fst2 :: (a,b) -> a
 fst2 (x,y) = x
 
 -- *SOBRECARGA
---? (+), (-), (*) :: (Num a) => a -> a -> a
---? Num es un tipo sobrecargado (a debe ser cualquier tipo numerico)
+-- ? (+), (-), (*) :: (Num a) => a -> a -> a
+-- ? Num es un tipo sobrecargado (a debe ser cualquier tipo numerico)
 
 twice2 :: Num a => a -> a
 twice2 x = x + x
@@ -99,7 +99,7 @@ sign2 x  | x > 0 = 1
         | x < 0 = -1
         | otherwise = 0
 
---* Funciones definidas PARCIALMENTE
+-- * Funciones definidas PARCIALMENTE
 --reciprocal 0 da error
 reciprocal :: (Eq a, Fractional a) => a -> a
 reciprocal x    | x == 0 = error "reciprocal is undefined"
@@ -123,7 +123,7 @@ cylinderArea r h = 2*circ + rect
         l = circLength r
         rect = rectArea l h
 
---? OTRA OPCION CON LET-IN SERIA
+-- ? OTRA OPCION CON LET-IN SERIA
 
 cylinderArea2 :: Double -> Double -> Double
 cylinderArea2 r h =
@@ -152,7 +152,7 @@ p1 x y = True ==> square2 (x+y) == square2 x + square2 y + 2*x*y    --se cumple
 p2 x y = True ==> abs (x+y) == abs x + abs y                        --debe fallar
 p3 x y = x>=0 && y>=0 ==> abs (x+y) == abs x + abs y                --se cumple
 
---? check property with
---? quickCheck (p1 :: Integer -> Integer -> Property)
---? OR
---? quickCheck p1
+-- ? check property with
+-- ? quickCheck (p1 :: Integer -> Integer -> Property)
+-- ? OR
+-- ? quickCheck p1
