@@ -41,35 +41,22 @@ import Test.QuickCheck
 data Set a  = Empty | Node a (Set a)
 
 empty :: Set a
-empty = Empty
+empty = undefined
 
 isEmpty :: Set a -> Bool
-isEmpty Empty = True
-isEmpty _     = False
+isEmpty = undefined
 
 isElem :: (Ord a) => a -> Set a -> Bool
-isElem a Empty = False
-isElem a (Node x s) | a < x     = False
-                    | a == x    = True
-                    | otherwise = isElem a s
+isElem = undefined
 
 insert :: (Ord a) => a -> Set a -> Set a
-insert x Empty = (Node x Empty)
-insert x set@(Node y s)
-  | x < y     = (Node x set)
-  | x == y    = set
-  | otherwise = (Node y (insert x s))
+insert = undefined
 
 delete :: (Ord a) => a -> Set a -> Set a
-delete x Empty = Empty
-delete x (Node y s)
-  | x < y     = (Node y s)
-  | x == y    = s
-  | otherwise = (Node y (delete x s))
+delete = undefined
 
 size :: Set a -> Int
-size Empty = 0
-size (Node x s) = 1 + size s
+size = undefined
 
 fold :: (a -> b -> b) -> b -> Set a -> b
 fold f z = fun
@@ -78,15 +65,14 @@ fold f z = fun
   fun (Node x s)  = f x (fun s)
 
 union :: (Ord a) => Set a -> Set a -> Set a
-union s1 s2 = fold insert s2 s1
+union = undefined
 
 difference :: (Ord a) => Set a -> Set a -> Set a
-difference s1 s2 = fold delete s1 s2
+difference = undefined
 
 intersection :: (Ord a) => Set a -> Set a -> Set a
-intersection s1 s2 = fold intersect empty s1
-  where
-    intersect x s = if isElem x s2 then insert x s else s
+intersection = undefined
+
 
 
 
