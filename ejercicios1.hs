@@ -8,6 +8,7 @@
 -- Relación de Ejercicios 1. Ejercicios resueltos: ..........
 --
 -------------------------------------------------------------------------------
+
 import Test.QuickCheck
 
 -- *##### EJERCICIO 1 ##### 
@@ -127,17 +128,17 @@ infix 4 ~=
 
 (~=) :: Double -> Double -> Bool
 x ~= y = abs (x-y) < epsilon
-  where epsilon = 1/1000
+  where epsilon = 1/100
 
 p_inversas2 x = eurosAPesetas (pesetasAEuros x) ~= x
 
--- *##### EJERCICIO 10 ##### 
+-- TODO ##### EJERCICIO 10 ##### 
 
 raices :: Double -> Double -> Double -> (Double, Double)
 raices a b c
   | a == 0 = error "no es de grado 2"
   | determinante < 0 = error "el determinante no puede ser negativo"
-  | otherwise = (((-b) + (sqrt determinante)) /( 2 * a), ((-b) - (sqrt determinante)) / (2 * a))
+  | otherwise = ((-b + sqrt determinante) / 2 * a, (-b - sqrt determinante) / 2 * a)
     where
       determinante = (b*b) - (4*a*c)
 
@@ -171,11 +172,10 @@ a ==>> b
 esBisiesto :: Integer -> Bool
 esBisiesto x = (mod x 4 == 0) && (mod x 100 == 0 ==>> mod x 400 == 0) 
 
--- *##### EJERCICIO 14 ##### 
+-- TODO ##### EJERCICIO 14 ##### 
 
 potencia :: Integer -> Integer -> Integer
 potencia b n
-  | n == 0 = 1
   | n == 1 = b
   | otherwise = b * potencia b (n-1)
 
